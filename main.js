@@ -31,17 +31,13 @@ const glados = async () => {
 }
 
 const notify = async (contents) => {
-  const token = process.env.NOTIFY
-  if (!token || !contents) return
-  await fetch(`https://www.pushplus.plus/send`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      token,
-      title: contents[0],
-      content: contents.join('<br>'),
-      template: 'markdown',
-    }),
+  const clientName = process.env.CLIENT_NAME
+  const clientSecret = process.env.CLIENT_SECRET
+
+  if (!clientName || !clientSecret || !contents) return
+  await fetch(`https://discordbot.lumisnap.im/send-message?message=${contents.join('<br>')}`, {
+    method: 'GET',
+    headers: { 'ClientName': clientName, 'ClientSecret': clientSecret },
   })
 }
 
