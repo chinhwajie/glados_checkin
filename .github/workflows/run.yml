@@ -18,4 +18,5 @@ jobs:
       - run: npm run main
         env:
           GLADOS: ${{ secrets.GLADOS }}
-          NOTIFY: ${{ secrets.NOTIFY }}
+          CLIENT_NAME: ${{ secrets.CLIENT_NAME }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
