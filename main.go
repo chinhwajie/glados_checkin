@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -70,11 +71,16 @@ func glados(ctx context.Context) ([]string, error) {
 	if err := json.NewDecoder(statusResp.Body).Decode(&statusData); err != nil {
 		return nil, fmt.Errorf("decoding status response: %w", err)
 	}
+	ld, err := strconv.Atoi(statusData.Data.LeftDays)
 
+	if err != nil {
+		return nil, fmt.Errorf("parsing left days: %w", err)
+	}
+	
 	return []string{
 		"Checking OK",
 		checkinData.Message,
-		fmt.Sprintf("Left Days %s", statusData.Data.LeftDays),
+		fmt.Sprintf("Left Days %d", ld),
 	}, nil
 }
 
