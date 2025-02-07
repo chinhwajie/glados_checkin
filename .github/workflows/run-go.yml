@@ -1,0 +1,28 @@
+name: run-go
+
+on:
+  workflow_dispatch:
+  push:
+  schedule:
+    - cron: 10 16 * * *
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4 # Use the Go setup action
+        with:
+          go-version: '1.20' # Specify your Go version (or 'latest')
+
+      - name: Build Go binary
+        run: go build -o glados-check # Builds the binary, named "glados-check"
+
+      - name: Run Go binary
+        run: ./glados-check # Executes the compiled binary
+        env:
+          GLADOS: ${{ secrets.GLADOS }}
+          CLIENT_NAME: ${{ secrets.CLIENT_NAME }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          GITHUB_SERVER_URL: ${{ github.server_url }} # Access github.server_url
+          GITHUB_REPOSITORY: ${{ github.repository }} # Access github.repository

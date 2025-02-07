@@ -72,7 +72,7 @@ func glados(ctx context.Context) ([]string, error) {
 	}
 
 	return []string{
-		"Checkin OK",
+		"Checking OK",
 		checkinData.Message,
 		fmt.Sprintf("Left Days %s", statusData.Data.LeftDays),
 	}, nil
@@ -94,7 +94,7 @@ func notify(ctx context.Context, contents []string) error {
 		}
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fmt.Sprintf("http://127.0.0.1:8081/send-message"), strings.NewReader(`{"content":"`+message+`"}`))
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, fmt.Sprintf("https://discordbot.lumisnap.im/send-message"), strings.NewReader(`{"content":"`+message+`"}`))
 	if err != nil {
 		return fmt.Errorf("creating notify request: %w", err)
 	}
