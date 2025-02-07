@@ -71,16 +71,16 @@ func glados(ctx context.Context) ([]string, error) {
 	if err := json.NewDecoder(statusResp.Body).Decode(&statusData); err != nil {
 		return nil, fmt.Errorf("decoding status response: %w", err)
 	}
-	ld, err := strconv.Atoi(statusData.Data.LeftDays)
+	ld, err := strconv.ParseFloat(statusData.Data.LeftDays, 64)
 
 	if err != nil {
 		return nil, fmt.Errorf("parsing left days: %w", err)
 	}
-	
+
 	return []string{
 		"Checking OK",
 		checkinData.Message,
-		fmt.Sprintf("Left Days %d", ld),
+		fmt.Sprintf("Left Days %d", int(ld)),
 	}, nil
 }
 
